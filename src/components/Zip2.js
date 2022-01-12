@@ -24,7 +24,8 @@ export default function Zip() {
                     key={elm.RecordNumber}
                     type={elm}
                 />))
-            )                           
+            ) 
+            .catch(error => console.log('Alert'))                          
     }, [count]);
 
     return (

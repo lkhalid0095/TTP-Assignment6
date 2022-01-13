@@ -1,7 +1,5 @@
 import React from "react"
-import Home from "./components/Home";
 import Zip2 from "./components/Zip2";
-import NotFound from "./components/NotFound";
 import Navbar from "./components/NavBar";
 
 

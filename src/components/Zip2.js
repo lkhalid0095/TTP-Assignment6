@@ -62,7 +62,7 @@ export default function Zip() {
 
     const renderError = () => {
         console.log("renderError "+isError)
-        if(isError){
+        if(isError && (count != 0)){
             return (
                 <div  className="alert.alert-danger-alert-dismissible.fade show"
                 role="alert">

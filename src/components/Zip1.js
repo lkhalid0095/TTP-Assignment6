@@ -20,39 +20,71 @@ export default function Zip() {
 
                 //setZipData updates state of zipData object
                 // Card is the child 
-                try{
-                    fetch(`http://ctp-zip-api.herokuapp.com/zip/${userInput}`)
-               
-                    //   .then(res => res.json())
-
-                    .then((res) => {
-                        if(res.ok){
-                            console.log('success')
-                           return res.json()
-                            
-                         } else {
-                            console.log('not successful')
-                            setIsError(true)
-                        }                    
-                    }) 
-
-                    .then(data => setZipData(data.map((elm) =>
-                            <Card 
-                            key = { elm.RecordNumber }
-                            type = { elm }
-                            />))
-                    )
-                }catch(err){
-                    setIsError(true)
-                    console.log("Problem")
-                    setTimeout(() => setIsError(false),4000)
+                const sendGetRequest = async () => {
+                    const results = await axios.get(`http://ctp-zip-api.herokuapp.com/zip/${userInput}`)
+                    console.log("axios")
+                    console.log(results.data);
+                    console.log("axios")
+                    setZipData(results.data)
                 }
 
+                sendGetRequest();
+                
 
-                setIsLoading(false)
+                // try{
+                //     fetch(`http://ctp-zip-api.herokuapp.com/zip/${userInput}`)
+                                          
+                    
+                //    .then((res) => res.json())    
+                    
+                //     // .then((res) => {
+                //     //     if(res.ok){
+                //     //         console.log('success')
+                //     //         res.json()
+                //     //     //    console.log(res.json())
+                //     //      } else {
+                //     //         console.log('notsuccessful')
+                //     //       //  setIsError(true)
+                //     //     }                    
+                //     // }) 
+
+                //     .then(data => setZipData(data.map((elm) =>
+                //             <
+                //             Card 
+                //             key = { elm.RecordNumber }
+                //             type = { elm }
+                //             />))
+                //     )
+
+                    
+
+                // }catch(err){
+                //     setIsError(true)
+                //     console.log("Problem")
+                //     setTimeout(() => setIsError(false),4000)
+                // }
+
+
+                // setIsLoading(false)
 
 
     }, [count]);
+
+    const renderZip = () => {
+        if(isLoading){
+            return <Loader />
+        }
+        return zipData.map(el => {
+            return (
+                <Card 
+                    key = {el.i.RecordNumber}
+                    type = {el}
+                />
+            )
+        })
+       
+    }
+
 
     const loaderIcon = () =>{
         if(isLoading){
@@ -61,12 +93,12 @@ export default function Zip() {
     }
 
     const renderError = () => {
-        console.log("renderError "+isError)
+       // console.log("renderError "+isError)
         if(isError){
             return (
                 <div  className="alert.alert-danger-alert-dismissible.fade show"
                 role="alert">
-                    Invalid zipcode, please try again
+                    Invalid zipcode, please renter your value
                 </div>
             )
         }
@@ -93,6 +125,7 @@ export default function Zip() {
                     <p id = 'list' > Result: </p> 
                     {loaderIcon()} 
                     {renderError()}   
+                    {/* {renderZip()} */}
                     { zipData } 
                     </div>        
                      </div>

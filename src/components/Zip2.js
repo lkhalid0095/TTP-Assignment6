@@ -1,10 +1,12 @@
 
+import { getElementError } from '@testing-library/react'
 import React from 'react'
 import Card from './Card'
 
 export default function Zip() {
     const[zipData, setZipData] = React.useState("")
     const [userInput, setUserInput] = React.useState('')
+    const [alert,setAlert] = React.useState('')
  
     // for dependancy value count : maybe can be changed after handleChange 
     const [count, setCount] = React.useState(0);
@@ -17,7 +19,9 @@ export default function Zip() {
        
         //setZipData updates state of zipData object
         // Card is the child 
-        fetch(`http://ctp-zip-api.herokuapp.com/zip/${userInput}`)
+        
+     
+            fetch(`http://ctp-zip-api.herokuapp.com/zip/${userInput}`)
             .then(res => res.json())
             .then(data => setZipData(data.map((elm) => 
                 <Card 
@@ -25,7 +29,8 @@ export default function Zip() {
                     type={elm}
                 />))
             ) 
-            .catch(error => console.log('Alert'))                          
+                
+
     }, [count]);
 
     return (
